@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>雙人價值觀分析</title>
+  <meta name="description" content="上傳兩份價值觀測驗 JSON 答案檔，比較整體與 15 大面向的相似度、差異與討論建議。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap wide">
+    <header class="site">
+      <a class="back no-print" href="index.html">← 回首頁</a>
+      <h1>雙人結果分析</h1>
+      <p class="lead">上傳兩個人各自下載的 JSON 答案檔。所有計算都在你的瀏覽器中完成，檔案不會被上傳。</p>
+    </header>
+
+    <div class="card no-print" id="upload">
+      <div class="upload-grid">
+        <label class="drop" id="drop-a">
+          <input type="file" accept=".json,application/json" data-slot="0">
+          <div class="who"><i class="dot-a" style="display:inline-block;width:10px;height:10px;border-radius:3px"></i> 第一位的答案檔</div>
+          <div class="muted" data-status>點此選擇或拖曳 JSON 檔到這裡</div>
+        </label>
+        <label class="drop" id="drop-b">
+          <input type="file" accept=".json,application/json" data-slot="1">
+          <div class="who"><i class="dot-b" style="display:inline-block;width:10px;height:10px;border-radius:3px"></i> 第二位的答案檔</div>
+          <div class="muted" data-status>點此選擇或拖曳 JSON 檔到這裡</div>
+        </label>
+      </div>
+      <p id="upload-msg" role="status" aria-live="polite"></p>
+      <div class="btn-row">
+        <button class="btn" id="run" type="button" disabled>開始分析</button>
+        <button class="btn ghost" id="demo" type="button">載入範例資料試看</button>
+      </div>
+    </div>
+
+    <div id="report"></div>
+
+    <footer>相似度僅代表本測驗回答的接近程度，不是科學驗證的契合度，也不能預測關係成敗。</footer>
+  </div>
+  <div class="tip" id="tip"></div>
+  <script src="js/questions.js"></script>
+  <script src="js/analysis.js"></script>
+</body>
+</html>

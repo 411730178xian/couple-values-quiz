@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>雙人價值觀測驗</title>
+  <meta name="description" content="15 大面向、75 題的雙人全方位價值觀測驗：各自填寫，再上傳兩份答案比較價值觀相似程度。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <h1>雙人全方位價值觀測驗</h1>
+      <p class="lead">15 大面向、75 道題目，涵蓋人生、社會、道德、金錢、人際、工作與生活。兩個人各自填寫，再一起看看你們看待世界的方式有多相似。</p>
+    </header>
+
+    <div class="choices">
+      <a class="choice" href="quiz.html">
+        <div class="card">
+          <div class="num">步驟 1</div>
+          <h2>填寫測驗</h2>
+          <p class="muted">輸入名稱、完成 75 題（約 10–15 分鐘），下載自己的 JSON 答案檔。兩個人請各自填寫一次。</p>
+          <span class="btn">開始填寫</span>
+        </div>
+      </a>
+      <a class="choice" href="analysis.html">
+        <div class="card">
+          <div class="num">步驟 2</div>
+          <h2>雙人結果分析</h2>
+          <p class="muted">上傳兩份 JSON 答案檔，查看整體與各面向相似度、差異題目、個人傾向與討論建議。</p>
+          <span class="btn ghost">前往分析</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="card">
+      <h2>15 大面向</h2>
+      <ul class="dim-list" id="dims"></ul>
+    </div>
+
+    <div class="card">
+      <h2>填寫小提醒</h2>
+      <ul>
+        <li>請依照<strong>你自己真實的想法</strong>作答，而不是你覺得「應該」怎麼想，或猜測對方會怎麼選。</li>
+        <li>建議兩人分開填寫，完成前不要互相討論答案。</li>
+        <li>每題使用 1～5 分：1＝非常不同意，5＝非常同意。</li>
+        <li>所有答案只會存在你的瀏覽器與你下載的檔案中，不會上傳到任何伺服器。</li>
+      </ul>
+    </div>
+
+    <p class="note">相似度百分比只代表這份自訂測驗的回答接近程度，不代表科學驗證的感情契合度，也不能用來預測關係成敗。</p>
+
+    <footer>雙人全方位價值觀測驗 · 純前端網頁，資料不離開你的裝置</footer>
+  </div>
+  <script src="js/questions.js"></script>
+  <script>
+    document.getElementById("dims").innerHTML =
+      DIMENSIONS.map(d => `<li>${d.id}. ${d.name}</li>`).join("");
+  </script>
+</body>
+</html>
