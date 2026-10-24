@@ -330,7 +330,7 @@
       <p class="muted">由高到低排序。滑過或點一下長條可以看到細節。</p>
       ${simBars(dims)}
       <h3>雙方在各面向的傾向位置</h3>
-      <p class="muted">每一列左右兩端是該面向的兩種取向，圓點是各自的傾向分數（1～5，已處理反向題）。兩點距離越遠，代表看法方向差越多。</p>
+      <p class="muted">每一列左右兩端是該面向的兩種取向，${nA}以圓形、${nB}以菱形標示各自的傾向分數（1～5，已處理反向題）。兩點距離越遠，代表看法方向差越多。</p>
       ${legend}
       ${dumbbells(dims, A, B)}
       <h3>面向明細表</h3>
@@ -441,7 +441,7 @@
       <p class="muted">差異不一定會變成衝突，下面列出的是「如果沒有說開，比較容易在日常中產生摩擦」的地方。</p>
       ${oppositeDims.length ? `<h3>方向相反的面向</h3><ul>${oppositeDims.map(d => `<li><strong>${d.name}</strong>：${nA}${d.la.text}，${nB}${d.lb.text}。可能出現在：${INSIGHT[d.id].scene}。</li>`).join("")}</ul>`
         : `<p>沒有任何面向出現雙方傾向方向相反的情況。</p>`}
-      ${conflictQs.length ? `<h3>差距 3 分以上的題目</h3><ul>${conflictQs.map(it => `<li>${pillA(it.a)} ${pillB(it.b)} 「${esc(it.text)}」<span class="muted">（${it.dimName}）</span></li>`).join("")}</ul>`
+      ${conflictQs.length ? `<h3>差距 3 分以上的題目</h3><ul>${conflictQs.map(it => `<li>「${esc(it.text)}」<span class="muted">（${it.dimName}）</span><br>${nA} ${pillA(it.a)}　${nB} ${pillB(it.b)}</li>`).join("")}</ul>`
         : `<p>沒有差距達 3 分以上的題目。</p>`}
     </section>`;
 

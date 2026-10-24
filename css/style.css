@@ -179,7 +179,8 @@ input[type="text"]:focus { outline: 2px solid var(--accent); outline-offset: 1px
 .big-num small { font-size: 24px; }
 
 .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--text-2); }
-.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: -1px; }
+.legend i.dot-b { width: 10px; height: 10px; border-radius: 2px; transform: rotate(45deg); margin-left: 1px; }
 .dot-a { background: var(--person-a); }
 .dot-b { background: var(--person-b); }
 
@@ -213,8 +214,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .persona li, .card li { margin: 4px 0; }
 
 .answer-pill { display: inline-block; min-width: 22px; text-align: center; padding: 0 6px; border-radius: 6px; font-weight: 700; color: #fff; }
-.answer-pill.a { background: var(--person-a); }
-.answer-pill.b { background: var(--person-b); }
+.answer-pill.a { background: var(--person-a); border-radius: 999px; }
+.answer-pill.b { background: var(--person-b); border-radius: 2px; }
 
 .toc { display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; }
 .toc a { text-decoration: none; background: var(--surface-2); color: var(--text-2); padding: 3px 10px; border-radius: 999px; }
@@ -247,7 +248,7 @@ details summary { cursor: pointer; color: var(--accent); font-weight: 600; margi
 }
 .db-dot::after { content: ""; position: absolute; inset: -8px; }
 .db-dot.a { background: var(--person-a); }
-.db-dot.b { background: var(--person-b); }
+.db-dot.b { background: var(--person-b); width: 13px; height: 13px; margin-left: -6.5px; margin-top: 1.5px; border-radius: 2px; transform: rotate(45deg); }
 
 /* 手機：表格改為卡片 */
 @media (max-width: 640px) {
@@ -266,3 +267,20 @@ textarea.code {
 details.paste { margin-top: 14px; }
 .inapp { border-color: var(--warn); }
 .inapp p { margin: 6px 0 10px; font-size: 14px; }
+
+/* 列印：瀏覽器預設不印背景色，圓點、答案框、長條會消失，所以強制印出 */
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #fff; --surface: #fff; --surface-2: #eeeae3; --border: #d9d2c6;
+    --text: #1a1815; --text-2: #4a453e; --muted: #6b655b;
+    --accent: #b5543a; --accent-soft: #f6e3dc;
+    --person-a: #1f5fae; --person-b: #e0601f; --bar: #5d7d60;
+  }
+  .dot-a, .dot-b, .db-dot, .db-seg, .db-track::before, .db-mid, .answer-pill,
+  .bars .track, .bars .fill, .tag, .note, .persona {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .db-row, .bars .row, tr { break-inside: avoid; }
+}
