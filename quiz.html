@@ -38,8 +38,22 @@
       <p class="muted">下載後，把檔案和另一位填寫者的檔案一起上傳到 <a href="analysis.html">分析頁</a>。</p>
     </div>
 
+    <div class="card" id="export" hidden>
+      <h2>沒有成功下載？</h2>
+      <p class="muted">有些手機或 App 內建的瀏覽器會擋下檔案下載。可以改用下面的方式把答案交給對方：</p>
+      <div class="btn-row">
+        <button class="btn" id="share" type="button" hidden>分享答案檔</button>
+        <button class="btn ghost" id="copy" type="button">複製答案</button>
+        <button class="btn ghost" id="redownload" type="button">再下載一次</button>
+      </div>
+      <p id="export-msg" role="status" aria-live="polite"></p>
+      <p class="muted">複製後，可以貼到 LINE、備忘錄或訊息傳給對方；在分析頁選擇「貼上答案文字」即可使用。</p>
+      <textarea id="export-text" class="code" rows="5" readonly aria-label="答案文字"></textarea>
+    </div>
+
     <footer>資料只存在你的瀏覽器與下載的檔案中</footer>
   </div>
+  <script src="js/inapp.js"></script>
   <script src="js/questions.js"></script>
   <script src="js/quiz.js"></script>
 </body>

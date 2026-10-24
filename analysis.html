@@ -30,6 +30,15 @@
           <div class="muted" data-status>點此選擇或拖曳 JSON 檔到這裡</div>
         </label>
       </div>
+      <details class="paste">
+        <summary>沒有檔案？改為貼上答案文字</summary>
+        <p class="muted">貼上填寫頁「複製答案」產生的文字（或 JSON 檔的內容）。</p>
+        <div class="upload-grid">
+          <div><label class="field" for="paste-a">第一位</label><textarea id="paste-a" class="code" rows="4" placeholder="雙人價值觀測驗答案&#10;名稱：…&#10;代碼：VQ1-…"></textarea></div>
+          <div><label class="field" for="paste-b">第二位</label><textarea id="paste-b" class="code" rows="4" placeholder="雙人價值觀測驗答案&#10;名稱：…&#10;代碼：VQ1-…"></textarea></div>
+        </div>
+        <div class="btn-row" style="margin-top:10px"><button class="btn ghost" id="use-paste" type="button">使用貼上的答案</button></div>
+      </details>
       <p id="upload-msg" role="status" aria-live="polite"></p>
       <div class="btn-row">
         <button class="btn" id="run" type="button" disabled>開始分析</button>
@@ -42,6 +51,7 @@
     <footer>相似度僅代表本測驗回答的接近程度，不是科學驗證的契合度，也不能預測關係成敗。</footer>
   </div>
   <div class="tip" id="tip"></div>
+  <script src="js/inapp.js"></script>
   <script src="js/questions.js"></script>
   <script src="js/analysis.js"></script>
 </body>

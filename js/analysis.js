@@ -56,6 +56,37 @@
     return { name: (data.name || fallbackName || "").trim() || fallbackName, answers: map };
   }
 
+  // 解析貼上的文字：可以是簡短答案代碼（VQ1-75 位數字）或完整 JSON
+  function parseAnswerText(text, fallbackName) {
+    const code = text.match(/VQ1-([1-5]{75})(?![0-9])/);
+    if (code) {
+      const nameMatch = text.match(/名稱[：:]\s*(.+)/);
+      const map = {};
+      QUESTIONS.forEach((q, i) => { map[q.id] = Number(code[1][i]); });
+      return { name: (nameMatch && nameMatch[1].trim()) || fallbackName, answers: map };
+    }
+    const trimmed = text.trim();
+    if (trimmed.startsWith("{")) return parseAnswerFile(JSON.parse(trimmed), fallbackName);
+    throw new Error("找不到有效的答案代碼（應為「VQ1-」後接 75 個 1～5 的數字），請確認是否完整複製。");
+  }
+
+  document.getElementById("use-paste").addEventListener("click", () => {
+    const errors = [];
+    [["paste-a", 0], ["paste-b", 1]].forEach(([id, slot]) => {
+      const text = document.getElementById(id).value;
+      if (!text.trim()) return;
+      const who = slot === 0 ? "第一位" : "第二位";
+      try {
+        setSlot(slot, parseAnswerText(text, slot === 0 ? "填寫者 A" : "填寫者 B"), "貼上的答案");
+      } catch (e) {
+        errors.push(`${who}：${e instanceof SyntaxError ? "JSON 內容不完整或格式錯誤。" : e.message}`);
+      }
+    });
+    uploadMsg.className = errors.length ? "error" : "";
+    uploadMsg.textContent = errors.length ? errors.join(" ")
+      : files[0] && files[1] ? "兩份答案都已載入，可以開始分析。" : "已載入，請再提供另一位的答案。";
+  });
+
   function setSlot(slot, person, label) {
     files[slot] = person;
     const box = document.getElementById(slot === 0 ? "drop-a" : "drop-b");

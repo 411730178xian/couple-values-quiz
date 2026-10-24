@@ -13,7 +13,10 @@
 
 1. 兩個人各自打開 `quiz.html` 填寫，完成後各自下載 JSON 答案檔。
 2. 打開 `analysis.html`，上傳兩份 JSON 檔，按「開始分析」。
-3. 想先看報告長什麼樣子，可以按「載入範例資料試看」，或直接開啟 `analysis.html#demo`。
+3. **無法下載檔案時**（常見於 LINE、Instagram、Facebook 等 App 的內建瀏覽器）：
+   - 頁面頂端會提示改用系統瀏覽器開啟；LINE 可直接點「用系統瀏覽器開啟」。
+   - 或在完成後按「複製答案」，取得一段簡短的答案代碼（`VQ1-` 加 75 個數字），傳給對方或貼到分析頁的「貼上答案文字」。
+4. 想先看報告長什麼樣子，可以按「載入範例資料試看」，或直接開啟 `analysis.html#demo`。
 
 ## 分析內容
 
@@ -48,4 +51,5 @@ css/style.css   樣式（支援深色模式、手機版）
 js/questions.js 題庫與面向設定
 js/quiz.js      填寫邏輯與 JSON 匯出
 js/analysis.js  比較分析與報告產生
+js/inapp.js     偵測 App 內建瀏覽器並顯示提示
 ```

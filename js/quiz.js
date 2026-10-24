@@ -100,16 +100,76 @@
         answerLabel: SCALE_LABELS[answers[q.id] - 1]
       }))
     };
-    const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+    const fileName = `價值觀測驗_${name.replace(/[\\/:*?"<>|]/g, "_")}.json`;
+    exported = {
+      fileName,
+      json: JSON.stringify(result, null, 2),
+      // 簡短答案代碼：方便貼到聊天軟體，分析頁可直接貼上使用
+      code: `雙人價值觀測驗答案\n名稱：${name}\n代碼：VQ1-${QUESTIONS.map(q => answers[q.id]).join("")}`
+    };
+    download();
+    showExport();
+    msg.className = "success";
+    msg.textContent = window.IN_APP_BROWSER
+      ? "答案已完成！這個 App 內建瀏覽器可能無法下載，請使用下方的「複製答案」。"
+      : "已下載答案檔！如果沒有看到檔案，請使用下方的備用方式。";
+  });
+
+  let exported = null;
+
+  function download() {
+    const blob = new Blob([exported.json], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `價值觀測驗_${name.replace(/[\\/:*?"<>|]/g, "_")}.json`;
+    a.download = exported.fileName;
     document.body.appendChild(a);
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    msg.className = "success";
-    msg.textContent = "已下載答案檔！請和另一位填寫者的檔案一起上傳到分析頁。";
+  }
+
+  function showExport() {
+    const box = document.getElementById("export");
+    box.hidden = false;
+    document.getElementById("export-text").value = exported.code;
+    const shareBtn = document.getElementById("share");
+    try {
+      const file = new File([exported.json], exported.fileName, { type: "application/json" });
+      shareBtn.hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
+    } catch (e) { shareBtn.hidden = true; }
+    if (window.IN_APP_BROWSER) box.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  const exportMsg = text => {
+    const el = document.getElementById("export-msg");
+    el.className = "success";
+    el.textContent = text;
+  };
+
+  document.getElementById("redownload").addEventListener("click", download);
+
+  document.getElementById("share").addEventListener("click", async () => {
+    const file = new File([exported.json], exported.fileName, { type: "application/json" });
+    try {
+      await navigator.share({ files: [file], title: exported.fileName });
+    } catch (e) { /* 使用者取消分享 */ }
+  });
+
+  document.getElementById("copy").addEventListener("click", async () => {
+    const ta = document.getElementById("export-text");
+    try {
+      await navigator.clipboard.writeText(exported.code);
+    } catch (e) {
+      // 部分內建瀏覽器不支援 clipboard API，改用選取文字複製
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      if (!document.execCommand("copy")) {
+        exportMsg("無法自動複製，請長按下方文字框手動複製。");
+        return;
+      }
+    }
+    exportMsg("已複製！可以貼到 LINE 或訊息傳給對方，或貼到分析頁。");
   });
 
   document.getElementById("reset").addEventListener("click", () => {
